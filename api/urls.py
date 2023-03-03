@@ -14,7 +14,12 @@ router.register(
     TransactionViewSet,
     basename="transactions",
 )
-router.register(r"accounts", BankAccountViewSet, basename="accounts")
+
+router.register(
+    r"accounts",
+    BankAccountViewSet,
+    basename="accounts",
+)
 
 
 from django.contrib import admin
@@ -24,7 +29,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path(
-        "api/accounts/<int:pk>/balance/",
-        BankAccountViewSet.as_view({"get": "account_balance"}),
+        "api/users/<int:user_id>/accounts/",
+        BankAccountViewSet.as_view({"get": "list"}),
+        name="user-accounts",
     ),
 ]
