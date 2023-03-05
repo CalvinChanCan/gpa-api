@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from .models import User, Transaction, BankAccount
+from .models import GpaUser, Transaction, BankAccount
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = GpaUser
         fields = "__all__"
 
 

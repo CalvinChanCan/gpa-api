@@ -1,6 +1,12 @@
 from django.urls import path, include  # Ensure `include` is imported
 from rest_framework import routers
-from gpa.views import UserViewSet, TransactionViewSet, BankAccountViewSet
+from gpa.views import (
+    UserViewSet,
+    TransactionViewSet,
+    BankAccountViewSet,
+    UserTransactionViewSet,
+    AccountTransactionViewSet,
+)
 
 router = routers.DefaultRouter()
 
@@ -32,5 +38,15 @@ urlpatterns = [
         "api/users/<int:user_id>/accounts/",
         BankAccountViewSet.as_view({"get": "list"}),
         name="user-accounts",
+    ),
+    path(
+        "api/users/<int:user_id>/transactions/",
+        UserTransactionViewSet.as_view({"get": "list"}),
+        name="user-transactions",
+    ),
+    path(
+        "api/accounts/<int:account_id>/transactions/",
+        AccountTransactionViewSet.as_view({"get": "list"}),
+        name="account-transactions",
     ),
 ]

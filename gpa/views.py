@@ -1,18 +1,34 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
 
-from .models import User, Transaction, BankAccount
+from .models import GpaUser, Transaction, BankAccount
 from .serializers import UserSerializer, TransactionSerializer, BankAccountSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = GpaUser.objects.all()
 
 
 class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
     queryset = Transaction.objects.all()
+
+
+class UserTransactionViewSet(viewsets.ModelViewSet):
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        user_id = self.kwargs.get("user_id")
+        return Transaction.objects.filter(account_id__user_id=user_id)
+
+
+class AccountTransactionViewSet(viewsets.ModelViewSet):
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        account_id = self.kwargs.get("account_id")
+        return Transaction.objects.filter(account_id=account_id)
 
 
 class BankAccountViewSet(viewsets.ModelViewSet):
