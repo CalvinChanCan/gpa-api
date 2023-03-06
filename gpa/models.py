@@ -65,7 +65,7 @@ class GpaUser(AbstractBaseUser, PermissionsMixin):
 
 class BankAccount(models.Model):
     user = models.ForeignKey(GpaUser, on_delete=models.CASCADE)
-    account_id = models.CharField(
+    account_num = models.CharField(
         max_length=16, unique=True, blank=False, validators=[MinLengthValidator(16)]
     )
 
