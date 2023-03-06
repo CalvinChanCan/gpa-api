@@ -9,14 +9,21 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class BankAccountSerializer(serializers.ModelSerializer):
-    balance = serializers.DecimalField(max_digits=10, decimal_places=2, read_only=True)
-
     class Meta:
         model = BankAccount
-        fields = "__all__"
+        fields = ("account_id","id")
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    account = BankAccountSerializer(read_only=True, source="account_id")
+
     class Meta:
         model = Transaction
-        fields = "__all__"
+        fields = (
+            "id",
+            "transaction_date",
+            "amount",
+            "notes",
+            "transaction_type",
+            "account",
+        )
