@@ -30,7 +30,7 @@ class SignInView(APIView):
         }
         return Response(
             {"success": "User signed in successfully", "user": user_data},
-            status=status.HTTP_200_OK
+            status=status.HTTP_200_OK,
         )
 
 

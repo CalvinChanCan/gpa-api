@@ -11,7 +11,7 @@ class UserSerializer(serializers.ModelSerializer):
 class BankAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = BankAccount
-        fields = ("account_id","id")
+        fields = ("account_id", "id")
 
 
 class TransactionSerializer(serializers.ModelSerializer):
