@@ -22,8 +22,15 @@ class SignInView(APIView):
                 {"error": "Invalid Credentials"}, status=status.HTTP_404_NOT_FOUND
             )
         login(request, user)
+        user_data = {
+            "id": user.id,
+            "email": user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+        }
         return Response(
-            {"success": "User signed in successfully"}, status=status.HTTP_200_OK
+            {"success": "User signed in successfully", "user": user_data},
+            status=status.HTTP_200_OK
         )
 
 
