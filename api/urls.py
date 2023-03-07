@@ -6,7 +6,7 @@ from gpa.views import (
     BankAccountViewSet,
     UserTransactionViewSet,
     AccountTransactionViewSet,
-    SignInView,
+    SignInView, SignUpView,
 )
 
 router = routers.DefaultRouter()
@@ -36,6 +36,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("signin/", SignInView.as_view(), name="signin"),
+    path('signup/', SignUpView.as_view(), name='sign-up'),
     path(
         "api/users/<int:user_id>/accounts/",
         BankAccountViewSet.as_view({"get": "list"}),
