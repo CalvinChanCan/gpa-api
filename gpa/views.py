@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import GpaUser, Transaction, Account
-from .serializers import UserSerializer, TransactionSerializer, BankAccountSerializer
+from .serializers import UserSerializer, TransactionSerializer, AccountSerializer
 
 
 class SignUpView(generics.CreateAPIView):
@@ -122,23 +122,12 @@ class AccountTransactionViewSet(viewsets.ModelViewSet):
 
 
 class AccountViewSet(viewsets.ModelViewSet):
-    serializer_class = BankAccountSerializer
+    serializer_class = AccountSerializer
     queryset = Account.objects.all()
 
     def list(self, request, *args, **kwargs):
         user_id = self.kwargs.get("user_id")
         queryset = Account.objects.filter(user_id=user_id)
         serializer = self.get_serializer(queryset, many=True)
-
-        # Add balance to each account
-        for account in serializer.data:
-            transactions = Transaction.objects.filter(account_id=account["id"])
-            balance = 0
-            for transaction in transactions:
-                if transaction.transaction_type == "CREDIT":
-                    balance += transaction.amount
-                elif transaction.transaction_type == "DEBIT":
-                    balance -= transaction.amount
-            account["balance"] = balance
 
         return Response(serializer.data)

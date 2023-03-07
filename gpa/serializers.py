@@ -21,14 +21,14 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class BankAccountSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ("account_id", "id")
+        fields = ("account_id", "id", "balance")
 
 
 class TransactionSerializer(serializers.ModelSerializer):
-    account = BankAccountSerializer(read_only=True, source="account_id")
+    account = AccountSerializer(read_only=True, source="account_id")
 
     class Meta:
         model = Transaction
