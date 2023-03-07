@@ -69,6 +69,41 @@ class TransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer
     queryset = Transaction.objects.all()
 
+    def post(self, request, **kwargs):
+        account_id = kwargs.get("account_id")
+        account = Account.objects.get(id=account_id)
+
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            amount = serializer.validated_data["amount"]
+            transaction_type = serializer.validated_data["transaction_type"]
+            transaction_date = serializer.validated_data["transaction_date"]
+            print(transaction_date)
+
+            transaction = Transaction.objects.create(
+                account_id=account,
+                amount=amount,
+                transaction_type=transaction_type,
+                transaction_date=transaction_date,
+            )
+
+            # Update account balance
+            if transaction_type == "CREDIT":
+                account.balance += amount
+            elif transaction_type == "DEBIT":
+                account.balance -= amount
+            account.save()
+
+            return Response(
+                {
+                    "success": "Transaction created successfully",
+                    "transaction": serializer.data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserTransactionViewSet(viewsets.ModelViewSet):
     serializer_class = TransactionSerializer

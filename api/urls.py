@@ -8,6 +8,7 @@ from gpa.views import (
     AccountTransactionViewSet,
     SignInView,
     SignUpView,
+    # CreateTransactionView,
 )
 
 router = routers.DefaultRouter()
@@ -28,7 +29,6 @@ router.register(
     AccountViewSet,
     basename="accounts",
 )
-
 
 from django.contrib import admin
 from django.urls import path
@@ -52,5 +52,10 @@ urlpatterns = [
         "api/accounts/<int:account_id>/transactions/",
         AccountTransactionViewSet.as_view({"get": "list"}),
         name="account-transactions",
+    ),
+    path(
+        "api/accounts/<int:account_id>/transactions/create/",
+        TransactionViewSet.as_view({"post": "post"}),
+        name="create-transaction",
     ),
 ]
