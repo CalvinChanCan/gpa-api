@@ -19,6 +19,7 @@ Postgresql <= 15.1
    - Examples
       - Create new account: `http://127.0.0.1:8000/api/users/1/accounts/create/`
       - Create new transaction: `http://127.0.0.1:8000/api/accounts/1/transactions/create/`
+      - Get balance of account on specified date `http://localhost:8000/api/accounts/1/balance/2023-03-10/`
 
 ## Useful commands:
 ```shell

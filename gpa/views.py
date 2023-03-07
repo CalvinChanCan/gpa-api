@@ -1,5 +1,10 @@
+from decimal import Decimal
+from datetime import datetime
+
 from django.contrib.auth import authenticate, login
+from django.db.models import Sum
 from rest_framework import viewsets, status, generics
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -146,3 +151,30 @@ class AccountViewSet(viewsets.ModelViewSet):
             )
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=["get"], url_path="balance/(?P<date>[^/.]+)")
+    def balance(self, date=None):
+        account = self.get_object()
+
+        if not date:
+            return Response(
+                {"error": "Missing date parameter"}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            date_obj = datetime.strptime(date, "%Y-%m-%d").date()
+        except ValueError:
+            return Response(
+                {"error": "Invalid date format. Date format must be YYYY-MM-DD"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        transactions = Transaction.objects.filter(
+            account_id=account, transaction_date__lte=date_obj
+        )
+        balance = transactions.aggregate(Sum("amount"))["amount__sum"] or Decimal(0)
+        response_data = {
+            "balance": balance,
+            "as_of": date_obj.isoformat(),
+        }
+        return Response(response_data, status=status.HTTP_200_OK)

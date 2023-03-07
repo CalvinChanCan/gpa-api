@@ -8,7 +8,6 @@ from gpa.views import (
     AccountTransactionViewSet,
     SignInView,
     SignUpView,
-    # CreateTransactionView,
 )
 
 router = routers.DefaultRouter()
@@ -42,6 +41,11 @@ urlpatterns = [
         "api/users/<int:user_id>/accounts/",
         AccountViewSet.as_view({"get": "list"}),
         name="user-accounts",
+    ),
+    path(
+        "api/accounts/<int:account_id>/balance/<str:date>/",
+        AccountViewSet.as_view({"get": "balance"}),
+        name="account-balance",
     ),
     path(
         "api/users/<int:user_id>/accounts/create/",
