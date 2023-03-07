@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 from .models import GpaUser, Transaction, Account
 from .serializers import UserSerializer, TransactionSerializer, BankAccountSerializer
 
+
 class SignUpView(generics.CreateAPIView):
     serializer_class = UserSerializer
 
@@ -30,6 +31,8 @@ class SignUpView(generics.CreateAPIView):
                 {"error": serializer.errors},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+
 class SignInView(APIView):
     def post(self, request):
         email = request.data.get("email")
