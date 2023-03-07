@@ -13,8 +13,9 @@ Postgresql <= 15.1
 4. Run `python manage.py makemigrations` and `python manage.py migrate`  
 5. Run `python manage.py runserver` to start the api server.
 6. Run `python manage.py createsuperuser` to create a superuser
-7. Login to `127.0.0.1:8000/admin` as the superuser to create some sample accounts and transactions.
-   - Note: Django Admin does not properly hash passwords so only user admin accounts created with `createsuper` can successfully login.  
+7. Create a new user in GPA UI at `127.0.0.1:5173/signup`.
+   - Note: Using Django Admin at `127.0.0.1:8000/admin/` does not properly create accounts with hash passwords.
+8. Use `127.0.0.1:8000/api/` to create some sample accounts and transactions. 
 
 ## Useful commands:
 ```shell
