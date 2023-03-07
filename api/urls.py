@@ -3,7 +3,7 @@ from rest_framework import routers
 from gpa.views import (
     UserViewSet,
     TransactionViewSet,
-    BankAccountViewSet,
+    AccountViewSet,
     UserTransactionViewSet,
     AccountTransactionViewSet,
     SignInView,
@@ -25,7 +25,7 @@ router.register(
 
 router.register(
     r"accounts",
-    BankAccountViewSet,
+    AccountViewSet,
     basename="accounts",
 )
 
@@ -40,7 +40,7 @@ urlpatterns = [
     path("signup/", SignUpView.as_view(), name="sign-up"),
     path(
         "api/users/<int:user_id>/accounts/",
-        BankAccountViewSet.as_view({"get": "list"}),
+        AccountViewSet.as_view({"get": "list"}),
         name="user-accounts",
     ),
     path(

@@ -86,7 +86,7 @@ class AccountTransactionViewSet(viewsets.ModelViewSet):
         return Transaction.objects.filter(account_id=account_id)
 
 
-class BankAccountViewSet(viewsets.ModelViewSet):
+class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = BankAccountSerializer
     queryset = Account.objects.all()
 
