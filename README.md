@@ -10,7 +10,7 @@ Postgresql <= 15.1
    - Create a new database `gpa`
 2. Clone this repository and run `pip install -r requirements.txt`.
 3. Create `.env` file with the variables found in `.env.example`
-4. Run `python manage.py makemigrations` and `python manage.py migrate`  
+4. Run `python manage.py makemigrations gpa` and `python manage.py migrate`  
 5. Run `python manage.py runserver` to start the api server.
 6. Run `python manage.py createsuperuser` to create a superuser
 7. Create a new user in GPA UI at `127.0.0.1:5173/signup`.
