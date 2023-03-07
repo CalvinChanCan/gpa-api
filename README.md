@@ -15,7 +15,10 @@ Postgresql <= 15.1
 6. Run `python manage.py createsuperuser` to create a superuser
 7. Create a new user in GPA UI at `127.0.0.1:5173/signup`.
    - Note: Using Django Admin at `127.0.0.1:8000/admin/` does not properly create accounts with hash passwords.
-8. Use `127.0.0.1:8000/api/` to create some sample accounts and transactions. 
+8. Use `127.0.0.1:8000/api/` to create some sample accounts and transactions.
+   - Examples
+      - Create new account: `http://127.0.0.1:8000/api/users/1/accounts/create/`
+      - Create new transaction: `http://127.0.0.1:8000/api/accounts/1/transactions/create/`
 
 ## Useful commands:
 ```shell
