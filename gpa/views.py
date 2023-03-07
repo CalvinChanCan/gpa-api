@@ -122,3 +122,27 @@ class AccountViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
 
         return Response(serializer.data)
+
+    def post(self, request, **kwargs):
+        user_id = kwargs.get("user_id")
+        user = GpaUser.objects.get(id=user_id)
+
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            account_id = serializer.validated_data["account_id"]
+
+            account = Account.objects.create(
+                user=user,
+                account_id=account_id,
+            )
+            account.save()
+
+            return Response(
+                {
+                    "success": "Account created successfully",
+                    "account": serializer.data,
+                },
+                status=status.HTTP_201_CREATED,
+            )
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

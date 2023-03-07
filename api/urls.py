@@ -44,6 +44,11 @@ urlpatterns = [
         name="user-accounts",
     ),
     path(
+        "api/users/<int:user_id>/accounts/create/",
+        AccountViewSet.as_view({"post": "post"}),
+        name="create-account",
+    ),
+    path(
         "api/users/<int:user_id>/transactions/",
         UserTransactionViewSet.as_view({"get": "list"}),
         name="user-transactions",
