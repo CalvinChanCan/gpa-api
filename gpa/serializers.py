@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import GpaUser, Transaction, BankAccount
+from .models import GpaUser, Transaction, Account
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,7 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class BankAccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = BankAccount
+        model = Account
         fields = ("account_id", "id")
 
 

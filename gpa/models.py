@@ -63,7 +63,7 @@ class GpaUser(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
-class BankAccount(models.Model):
+class Account(models.Model):
     user = models.ForeignKey(GpaUser, on_delete=models.CASCADE)
     account_id = models.CharField(
         max_length=16, unique=True, blank=False, validators=[MinLengthValidator(16)]
@@ -71,7 +71,7 @@ class BankAccount(models.Model):
 
 
 class Transaction(models.Model):
-    account_id = models.ForeignKey(BankAccount, on_delete=models.CASCADE)
+    account_id = models.ForeignKey(Account, on_delete=models.CASCADE)
     transaction_date = models.DateTimeField(null=False, blank=False)
     amount = models.DecimalField(
         max_digits=10,

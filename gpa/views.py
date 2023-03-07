@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import GpaUser, Transaction, BankAccount
+from .models import GpaUser, Transaction, Account
 from .serializers import UserSerializer, TransactionSerializer, BankAccountSerializer
 
 
@@ -62,11 +62,11 @@ class AccountTransactionViewSet(viewsets.ModelViewSet):
 
 class BankAccountViewSet(viewsets.ModelViewSet):
     serializer_class = BankAccountSerializer
-    queryset = BankAccount.objects.all()
+    queryset = Account.objects.all()
 
     def list(self, request, *args, **kwargs):
         user_id = self.kwargs.get("user_id")
-        queryset = BankAccount.objects.filter(user_id=user_id)
+        queryset = Account.objects.filter(user_id=user_id)
         serializer = self.get_serializer(queryset, many=True)
 
         # Add balance to each account
