@@ -77,15 +77,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             amount = serializer.validated_data["amount"]
             transaction_type = serializer.validated_data["transaction_type"]
-            transaction_date = serializer.validated_data["transaction_date"]
-            print(transaction_date)
-
-            transaction = Transaction.objects.create(
-                account_id=account,
-                amount=amount,
-                transaction_type=transaction_type,
-                transaction_date=transaction_date,
-            )
 
             # Update account balance
             if transaction_type == "CREDIT":
