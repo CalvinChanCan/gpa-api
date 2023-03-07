@@ -7,6 +7,8 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from django.core.validators import EmailValidator, MinLengthValidator, MinValueValidator
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class CustomUserManager(BaseUserManager):
@@ -68,6 +70,11 @@ class Account(models.Model):
     account_id = models.CharField(
         max_length=16, unique=True, blank=False, validators=[MinLengthValidator(16)]
     )
+    balance = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        default=0,
+    )
 
 
 class Transaction(models.Model):
@@ -87,3 +94,14 @@ class Transaction(models.Model):
             ("DEBIT", "Debit"),
         ],
     )
+
+
+@receiver(post_save, sender=Transaction)
+def update_balance(sender, instance, created, **kwargs):
+    account = instance.account_id
+    if created:
+        if instance.transaction_type == "CREDIT":
+            account.balance += instance.amount
+        elif instance.transaction_type == "DEBIT":
+            account.balance -= instance.amount
+        account.save()
